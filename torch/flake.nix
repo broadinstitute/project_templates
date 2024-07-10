@@ -61,11 +61,13 @@
                   ]; 
                   enterShell = ''
                     export LD_LIBRARY_PATH=$NIX_LD_LIBRARY_PATH
+                    export PYTHON_KEYRING_BACKEND=keyring.backends.fail.Keyring
                     eval "$(micromamba shell hook -s bash)"
                     if [ ! -d ".venv/envs/counterfactuals" ]; then
-                       micromamba create -r .venv -n counterfactuals python=3.10 ipykernel pytorch torchvision torchaudio pytorch-cuda=11.8 -c pytorch -c nvidia -c conda-forge
-                       micromamba activate .venv/envs/counterfactuals
+                       micromamba create -r .venv -n counterfactuals python=3.10 ipykernel pytorch torchvision torchaudio pytorch-cuda=11.8 -c pytorch -c nvidia -c conda-forge -y
+                       micromamba activate .venv/envs/counterfactuals 
                        python -m ipykernel install --user --name counterfactuals
+                       poetry install -vv --with dev --no-root 
                     fi
                     micromamba activate .venv/envs/counterfactuals
                   '';
