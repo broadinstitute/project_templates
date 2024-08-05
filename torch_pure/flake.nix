@@ -47,7 +47,6 @@
                   pp.torch
                   pp.torchvision
                   pp.scikit-image
-                  mpkgs.python311Packages.cupy
                 ]));
               in mkShell {
                     NIX_LD = runCommand "ld.so" {} ''
@@ -58,8 +57,16 @@
                       python_with_pkgs
                       python311Packages.venvShellHook
                       mpkgs.python311Packages.cupy
-                      mpkgs.python311Packag
-
+                      mpkgs.python311Packages.ray
+                      uv
+                    ]
+                    ++ libList; 
+                    venvDir = "./.venv";
+                    postVenvCreation = ''
+                        unset SOURCE_DATE_EPOCH
+                      '';
+                    postShellHook = ''
+                        unset SOURCE_DATE_EPOCH
                       '';
                     shellHook = ''
                         export LD_LIBRARY_PATH=$NIX_LD_LIBRARY_PATH:$LD_LIBRARY_PATH
