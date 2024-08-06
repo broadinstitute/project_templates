@@ -410,7 +410,7 @@ scipy==1.14.0
 seaborn==0.13.2
 send2trash==1.8.3
     # via jupyter-server
-setuptools==65.5.0
+setuptools==70.0.0
     # via jupyterlab
 six==1.16.0
     # via
