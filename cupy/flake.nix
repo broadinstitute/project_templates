@@ -44,7 +44,7 @@
           devShells = {
               default = let 
                 python_with_pkgs = (mpkgs.python311.withPackages(pp: [
-                  pp.cupy
+                  pp.ray
                 ]));
               in mkShell {
                     NIX_LD = runCommand "ld.so" {} ''
@@ -53,9 +53,7 @@
                     NIX_LD_LIBRARY_PATH = lib.makeLibraryPath libList;
                     packages = [
                       python_with_pkgs
-                      python310Packages.venvShellHook
-                      # mpkgs.python311Packages.cupy
-                      # mpkgs.python311Packages.ray
+                      python311Packages.venvShellHook
                       uv
                     ]
                     ++ libList; 
@@ -78,7 +76,3 @@
         }
       );
 }
-            # export CUDA_PATH=${pkgs.cudaPackages.cudatoolkit}
-            # export LD_LIBRARY_PATH=${pkgs.cudaPackages.cuda_nvrtc}/lib
-            # export EXTRA_LDFLAGS="-L/lib -L${pkgs.linuxPackages.nvidia_x11}/lib"
-            # export EXTRA_CCFLAGS="-I/usr/include"
